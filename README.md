@@ -30,7 +30,7 @@
 ## Version
 step 1
 ```sh
-implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'
+implementation 'com.github.abbasmoosavi:PictureSelector:v2.6.1'
 ```
 
 step 2
