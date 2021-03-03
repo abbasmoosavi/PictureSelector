@@ -1,9 +1,11 @@
 package com.luck.picture.lib.model;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -263,8 +265,16 @@ public final class LocalMediaPageLoader {
                 Cursor data = null;
                 try {
                     if (SdkVersionUtils.checkedAndroid_R()) {
-                        Bundle queryArgs = MediaUtils.createQueryArgsBundle(getPageSelection(bucketId), getPageSelectionArgs(bucketId), limit, (page - 1) * pageSize);
-                        data = mContext.getContentResolver().query(QUERY_URI, PROJECTION_PAGE, queryArgs, null);
+                        Bundle bundle =  new  Bundle ();
+                        bundle . putInt( ContentResolver . QUERY_ARG_SQL_SORT_ORDER , ContentResolver . QUERY_SORT_DIRECTION_DESCENDING );
+                        bundle . putString( ContentResolver . QUERY_ARG_SQL_SELECTION , getPageSelection(bucketId));
+                        bundle . putStringArray( ContentResolver . QUERY_ARG_SQL_SELECTION_ARGS , getPageSelectionArgs(bucketId));
+                        if (page !=  - 1 ) {
+                            bundle . putInt( ContentResolver . QUERY_ARG_LIMIT , limit);
+                            bundle . putInt( ContentResolver. QUERY_ARG_OFFSET , (page -  1 ) * pageSize);
+                        }
+                        CancellationSignal cancellationSignal =  new CancellationSignal();
+                        data = mContext . getContentResolver() . query( QUERY_URI , PROJECTION_PAGE , bundle, cancellationSignal);
                     } else {
                         String orderBy = page == -1 ? MediaStore.Files.FileColumns._ID + " DESC" : MediaStore.Files.FileColumns._ID + " DESC limit " + limit + " offset " + (page - 1) * pageSize;
                         data = mContext.getContentResolver().query(QUERY_URI, PROJECTION_PAGE, getPageSelection(bucketId), getPageSelectionArgs(bucketId), orderBy);
