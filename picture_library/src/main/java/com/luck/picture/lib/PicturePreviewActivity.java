@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
@@ -27,6 +29,7 @@ import com.luck.picture.lib.config.PictureSelectionConfig;
 import com.luck.picture.lib.manager.UCropManager;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnQueryDataResultListener;
+import com.luck.picture.lib.model.CutInfo;
 import com.luck.picture.lib.model.LocalMediaPageLoader;
 import com.luck.picture.lib.observable.ImagesObservable;
 import com.luck.picture.lib.tools.AttrsUtils;
@@ -38,13 +41,15 @@ import com.luck.picture.lib.tools.ValueOf;
 import com.luck.picture.lib.tools.VoiceUtils;
 import com.luck.picture.lib.widget.PreviewViewPager;
 import com.yalantis.ucrop.UCrop;
-import com.yalantis.ucrop.model.CutInfo;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.luck.picture.lib.PictureMultiCuttingActivity.EXTRA_OUTPUT_URI_LIST;
+import static com.luck.picture.lib.PictureSelectorActivity.REQUEST_MULTI_CROP;
 
 /**
  * @author：luck
@@ -1081,10 +1086,10 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case UCrop.REQUEST_MULTI_CROP:
+                case REQUEST_MULTI_CROP:
                     // 裁剪数据
-                    List<CutInfo> list = UCrop.getMultipleOutput(data);
-                    data.putParcelableArrayListExtra(UCrop.Options.EXTRA_OUTPUT_URI_LIST,
+                    List<CutInfo> list = this.getMultipleOutput(data);
+                    data.putParcelableArrayListExtra(EXTRA_OUTPUT_URI_LIST,
                             (ArrayList<? extends Parcelable>) list);
                     // 已选数量
                     data.putParcelableArrayListExtra(PictureConfig.EXTRA_SELECT_LIST,
@@ -1109,6 +1114,15 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
         }
     }
 
+    /**
+     * Multiple Retrieve cropped image Cuts from the result Intent
+     *
+     * @param intent crop result intent
+     */
+    @Nullable
+    public static List<CutInfo> getMultipleOutput(@NonNull Intent intent) {
+        return intent.getParcelableArrayListExtra(EXTRA_OUTPUT_URI_LIST);
+    }
 
     @Override
     public void onBackPressed() {
