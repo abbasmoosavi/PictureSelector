@@ -40,7 +40,7 @@
 step 1
 
 ```sh
-implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.1'
+implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.2'
 ```
 
 step 2
