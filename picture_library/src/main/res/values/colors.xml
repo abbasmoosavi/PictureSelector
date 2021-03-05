@@ -36,4 +36,6 @@
     <color name="picture_color_half_white">#99FFFFFF</color>
     <color name="picture_color_ff572e">#ff572e</color>
     <color name="picture_color_529BeA">#529BeA</color>
+    <color name="ucrop_color_ec">#ececec</color>
+    <color name="ucrop_color_ba3">#b0567ba3</color>
 </resources>
