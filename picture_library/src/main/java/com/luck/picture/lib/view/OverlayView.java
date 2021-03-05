@@ -626,6 +626,9 @@ public class OverlayView extends View {
         mCropGridColumnCount = a.getInt(R.styleable.ucrop_UCropView_ucrop_grid_column_count, DEFAULT_CROP_GRID_COLUMN_COUNT);
     }
 
+    public void setOverlayViewChangeListener(com.yalantis.ucrop.callback.OverlayViewChangeListener overlayViewChangeListener) {
+    }
+
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({FREESTYLE_CROP_MODE_DISABLE, FREESTYLE_CROP_MODE_ENABLE, FREESTYLE_CROP_MODE_ENABLE_WITH_PASS_THROUGH})

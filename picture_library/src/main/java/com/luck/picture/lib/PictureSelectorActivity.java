@@ -25,6 +25,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -77,6 +78,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.luck.picture.lib.ucrop.CropOptions.Options.EXTRA_OUTPUT_URI_LIST;
 import static com.yalantis.ucrop.UCrop.EXTRA_ERROR;
 import static com.yalantis.ucrop.UCrop.REQUEST_CROP;
 import static com.yalantis.ucrop.UCrop.RESULT_ERROR;
@@ -1589,7 +1591,7 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
             bundle.putInt(PictureConfig.EXTRA_DATA_COUNT, ValueOf.toInt(mTvPictureTitle.getTag(R.id.view_count_tag)));
             bundle.putString(PictureConfig.EXTRA_IS_CURRENT_DIRECTORY, mTvPictureTitle.getText().toString());
             JumpUtils.startPicturePreviewActivity(getContext(), config.isWeChatStyle, bundle,
-                    config.selectionMode == PictureConfig.SINGLE ? UREQUEST_CROP : UREQUEST_MULTI_CROP);
+                    config.selectionMode == PictureConfig.SINGLE ? REQUEST_CROP : REQUEST_MULTI_CROP);
             overridePendingTransition(PictureSelectionConfig.windowAnimationStyle.activityPreviewEnterAnimation, R.anim.picture_anim_fade_in);
         }
     }
@@ -2154,7 +2156,7 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
         if (data == null) {
             return;
         }
-        List<CutInfo> mCuts = UCrop.getMultipleOutput(data);
+        List<CutInfo> mCuts = getMultipleOutput(data);
         if (mCuts == null || mCuts.size() == 0) {
             return;
         }
@@ -2210,6 +2212,16 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
             }
             handlerResult(result);
         }
+    }
+
+    /**
+     * Multiple Retrieve cropped image Cuts from the result Intent
+     *
+     * @param intent crop result intent
+     */
+    @Nullable
+    public static List<CutInfo> getMultipleOutput(@NonNull Intent intent) {
+        return intent.getParcelableArrayListExtra(EXTRA_OUTPUT_URI_LIST);
     }
 
     /**

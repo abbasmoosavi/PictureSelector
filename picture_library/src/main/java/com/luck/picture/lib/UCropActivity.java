@@ -44,15 +44,15 @@ import androidx.transition.TransitionManager;
 import com.luck.picture.lib.immersion.CropImmersiveManage;
 import com.luck.picture.lib.util.MimeType;
 import com.luck.picture.lib.util.ScreenUtils;
+import com.luck.picture.lib.view.GestureCropImageView;
 import com.luck.picture.lib.view.OverlayView;
+import com.luck.picture.lib.view.UCropView;
 import com.yalantis.ucrop.callback.BitmapCropCallback;
 import com.yalantis.ucrop.model.AspectRatio;
 import com.yalantis.ucrop.util.FileUtils;
 import com.yalantis.ucrop.util.SelectedStateListDrawable;
 import com.yalantis.ucrop.view.CropImageView;
-import com.yalantis.ucrop.view.GestureCropImageView;
 import com.yalantis.ucrop.view.TransformImageView;
-import com.yalantis.ucrop.view.UCropView;
 import com.yalantis.ucrop.view.widget.AspectRatioTextView;
 import com.yalantis.ucrop.view.widget.HorizontalProgressWheelView;
 
@@ -547,7 +547,7 @@ public class UCropActivity extends AppCompatActivity {
         mGestureCropImageView = mUCropView.getCropImageView();
         mOverlayView = mUCropView.getOverlayView();
 
-        mGestureCropImageView.setTransformImageListener(mImageListener);
+        mGestureCropImageView.setTransformImageListener((com.luck.picture.lib.view.TransformImageView.TransformImageListener) mImageListener);
 
         ((ImageView) findViewById(R.id.image_view_logo)).setColorFilter(mLogoColor, PorterDuff.Mode.SRC_ATOP);
 
